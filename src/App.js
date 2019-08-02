@@ -81,8 +81,10 @@ class App extends React.Component {
         if (this.state.guestName && this.state.showGuestName) {
             let currentAnnouncement = this
                 .announcementArray
-                .shift();
-            if (currentAnnouncement === "Goodbye") {
+                .shift(),
+                finalAnnouncment = this.announcementArray[this.announcementArray.length - 1];
+                console.log(finalAnnouncment)
+            if (currentAnnouncement === finalAnnouncment) {
                 return this.setState({announcement: '', showGuestName: false})
             }
             return this.setState({announcement: currentAnnouncement});
