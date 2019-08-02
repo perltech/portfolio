@@ -16,28 +16,28 @@ class App extends React.Component {
     constructor(props) {
         super();
         this.announcementArray = [
-          "Hello",
-          "Hola",
-          "Bonjour",
-          "Hallo",
-          "Ciao",
-          "Zdravo",
-          "Hei",
-          "Salve",
-          "שלום",
-          "Привет",
-          "Γειά σου",
-          "Xin chào",
-          "नमस्ते",
-          "你好",
-          "여보세요",
-          "こんにちは",
-          "slav",
-          "مرحبا",
-          "Cześć",
-        //   "Olá"
-          "Goodbye"
-          ];
+            "Hello",
+            "Hola",
+            "Bonjour",
+            "Hallo",
+            "Ciao",
+            "Zdravo",
+            "Hei",
+            "Salve",
+            "שלום",
+            "Привет",
+            "Γειά σου",
+            "Xin chào",
+            "नमस्ते",
+            "你好",
+            "여보세요",
+            "こんにちは",
+            "Slav",
+            "مرحبا",
+            "Cześć",
+            //   "Olá"
+            "Goodbye"
+        ];
         this.state = {
             announcement: '',
             guestName: '',
@@ -62,6 +62,10 @@ class App extends React.Component {
         this.timerID = setInterval(() => this.setAnnouncement(), 1000);
     }
 
+    // componentDidUpdate() {
+    //     this.setAnnouncement();
+    // }
+
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
@@ -77,24 +81,16 @@ class App extends React.Component {
             showGuestName: !this.state.showGuestName
         })
     }
-
-    // randomVal(arr) {
-
-    // }
     setAnnouncement() {
-      if (this.state.guestName && this.state.showGuestName) {
-        let currentAnnouncement = this
-        .announcementArray
-        .shift();
-        console.log(currentAnnouncement);
+        if (this.state.guestName && this.state.showGuestName) {
+            let currentAnnouncement = this
+                .announcementArray
+                .shift();
             if (currentAnnouncement === "Goodbye") {
-                return this.setState({
-                    announcement: '',
-                    showGuestName: false
-                })
+                return this.setState({announcement: '', showGuestName: false})
             }
-        return this.setState({announcement: currentAnnouncement});       
-      }
+            return this.setState({announcement: currentAnnouncement});
+        }
     }
 
     setQuote() {
