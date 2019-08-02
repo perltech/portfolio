@@ -15,11 +15,34 @@ class App extends React.Component {
 
     constructor(props) {
         super();
-        this.announcementArray = ["Hello", "Bonjour", "Bienvenue"];
+        this.announcementArray = [
+          "Hello",
+          "Hola",
+          "Bonjour",
+          "Hallo",
+          "Ciao",
+          "Zdravo",
+          "Hei",
+          "Salve",
+          "שלום",
+          "Привет",
+          "Γειά σου",
+          "Xin chào",
+          "नमस्ते",
+          "你好",
+          "여보세요",
+          "こんにちは",
+          "slav",
+          "مرحبا",
+          "Cześć",
+        //   "Olá"
+          "Goodbye"
+          ];
         this.state = {
             announcement: '',
             guestName: '',
-            modalIsOpen: true
+            modalIsOpen: true,
+            showGuestName: false
         }
 
         this.handleInputChange = this
@@ -34,11 +57,6 @@ class App extends React.Component {
             .handleModal
             .bind(this);
     }
-
-    // Possibly needed for modal on page load
-    // componentWillMount() {
-
-    // }
 
     componentDidMount() {
         this.timerID = setInterval(() => this.setAnnouncement(), 1000);
@@ -55,11 +73,31 @@ class App extends React.Component {
 
     handleModal() {
         this.setState({
-            modalIsOpen: !this.state.modalIsOpen
+            modalIsOpen: !this.state.modalIsOpen,
+            showGuestName: !this.state.showGuestName
         })
     }
 
+    // randomVal(arr) {
+
+    // }
     setAnnouncement() {
+      if (this.state.guestName && this.state.showGuestName) {
+        let currentAnnouncement = this
+        .announcementArray
+        .shift();
+        console.log(currentAnnouncement);
+            if (currentAnnouncement === "Goodbye") {
+                return this.setState({
+                    announcement: '',
+                    showGuestName: false
+                })
+            }
+        return this.setState({announcement: currentAnnouncement});       
+      }
+    }
+
+    setQuote() {
         // Get first announcement
         let currentAnnouncement = this
             .announcementArray
@@ -80,7 +118,8 @@ class App extends React.Component {
                 </Modal>
                 <TitleText
                     announcement={this.state.announcement}
-                    guestName={this.state.guestName}/>
+                    guestName={this.state.guestName}
+                    showGuestName={this.state.showGuestName}/>
             </Main>
         )
     };
