@@ -62,10 +62,6 @@ class App extends React.Component {
         this.timerID = setInterval(() => this.setAnnouncement(), 1000);
     }
 
-    // componentDidUpdate() {
-    //     this.setAnnouncement();
-    // }
-
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
