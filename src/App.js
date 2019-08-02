@@ -8,6 +8,7 @@ import TitleText from './components/TitleText/TitleText';
 import ContactInfo from './components/ContactInfo/ContactInfo';
 import GuestName from './components/GuestName/GuestName';
 import Modal from './components/Modal/Modal';
+import ProgrammerQuote from './components/ProgrammerQuote/ProgrammerQuote';
 
 // TODO: Import files with CSS as entire folder
 
@@ -38,11 +39,19 @@ class App extends React.Component {
             //   "Olá"
             "Goodbye"
         ];
+
+        this.ProgrammerQuote = [
+            {"Bjarne Stroustrup": `If you ever think you've come to a simple solution, you've underestimated the complexity of the problem`},
+            {nextQuote: "quoteText"}
+        ];
+
         this.state = {
             announcement: '',
             guestName: '',
             modalIsOpen: true,
-            showGuestName: false
+            showGuestName: false,
+            quote: '',
+            showQuote: false
         }
 
         this.handleInputChange = this
@@ -59,11 +68,14 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.timerID = setInterval(() => this.setAnnouncement(), 1000);
+        //TODO: Sync timers
+        this.timerAnnouncement = setInterval(() => this.setAnnouncement(), 1000);
+        this.timerQuote = setInterval(() => this.setQuote(), 5000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.timerID);
+        clearInterval(this.timerAnnouncement);
+        clearInterval(this.timerQuote);
     }
 
     handleInputChange(event) {
@@ -74,7 +86,8 @@ class App extends React.Component {
     handleModal() {
         this.setState({
             modalIsOpen: !this.state.modalIsOpen,
-            showGuestName: !this.state.showGuestName
+            showGuestName: !this.state.showGuestName,
+            showQuote: !this.state.showQuote
         })
     }
     setAnnouncement() {
@@ -83,8 +96,8 @@ class App extends React.Component {
                 .announcementArray
                 .shift(),
                 finalAnnouncment = this.announcementArray[this.announcementArray.length - 1];
-                console.log(finalAnnouncment)
             if (currentAnnouncement === finalAnnouncment) {
+                // TODO: Unmount announcement timer
                 return this.setState({announcement: '', showGuestName: false})
             }
             return this.setState({announcement: currentAnnouncement});
@@ -92,15 +105,13 @@ class App extends React.Component {
     }
 
     setQuote() {
-        // Get first announcement
-        let currentAnnouncement = this
-            .announcementArray
+        let currentQuote = this
+            .ProgrammerQuote
             .shift();
-        // Send announcement to the back after it's been used
         this
-            .announcementArray
-            .push(currentAnnouncement);
-        return this.setState({announcement: currentAnnouncement});
+            .ProgrammerQuote
+            .push(currentQuote);
+        return this.setState({quote: currentQuote});
     }
 
     render() {
@@ -114,6 +125,7 @@ class App extends React.Component {
                     announcement={this.state.announcement}
                     guestName={this.state.guestName}
                     showGuestName={this.state.showGuestName}/>
+                <ProgrammerQuote quote={this.state.quote} showQuote={this.state.showQuote}/>
             </Main>
         )
     };
